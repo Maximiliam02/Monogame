@@ -10,10 +10,9 @@ namespace Template
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D smiley;
-        Vector2 smileypos = new Vector2(700, 150);
-
+        SpriteBatch SpriteBatch;
+        Texture2D Eric;
+        Vector2 EricPos = new Vector2(100, 300);
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -28,7 +27,7 @@ namespace Template
         /// </summary>
         protected override void Initialize()
         {
-            
+            // TODO: Add your initialization logic here
 
             base.Initialize();
         }
@@ -40,9 +39,10 @@ namespace Template
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            Eric = Content.Load<Texture2D>("Eric");
 
-            smiley = Content.Load<Texture2D>("kisspng-smiley-character-clip-art-5b180f400947b9.703889471528303424038 (1)");
+            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -59,40 +59,39 @@ namespace Template
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
+           protected override void Update(GameTime gameTime)
+        {
             KeyboardState kstate = Keyboard.GetState();
             if (kstate.IsKeyDown(Keys.Right))
-                smileypos.X+= 3;
+                EricPos.X++;
             if (kstate.IsKeyDown(Keys.Left))
-                smileypos.X-=3;
+                EricPos.X--;
             if (kstate.IsKeyDown(Keys.Down))
-                smileypos.Y+= 3;
+                EricPos.Y++;
             if (kstate.IsKeyDown(Keys.Up))
-                smileypos.Y-= 3;
-
-
+                EricPos.Y--;
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
+        // TODO: Add your update logic here
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            SpriteBatch.Begin();
+            SpriteBatch.Draw(Eric, EricPos, Color.CornflowerBlue);
+            SpriteBatch.End();
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(smiley, new Rectangle(smileypos.ToPoint(), new Point(100,100)), Color.White);
-            spriteBatch.End();
+            // TODO: Add your drawing code here
 
 
-
-            base.Draw(gameTime);
         }
     }
+
+
+
 }
+
+
+
