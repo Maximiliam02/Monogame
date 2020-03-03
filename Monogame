@@ -13,6 +13,7 @@ namespace Template
         SpriteBatch SpriteBatch;
         Texture2D Eric;
         Vector2 EricPos = new Vector2(100, 300);
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -41,6 +42,7 @@ namespace Template
             // Create a new SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             Eric = Content.Load<Texture2D>("Eric");
+           
 
             // TODO: use this.Content to load your game content here
         }
@@ -60,7 +62,7 @@ namespace Template
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
 
-           protected override void Update(GameTime gameTime)
+        protected override void Update(GameTime gameTime)
         {
             KeyboardState kstate = Keyboard.GetState();
             if (kstate.IsKeyDown(Keys.Right))
@@ -79,6 +81,9 @@ namespace Template
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            graphics.PreferredBackBufferWidth = 2000;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 1000;   // set this value to the desired height of your window
+            graphics.ApplyChanges();
             SpriteBatch.Begin();
             SpriteBatch.Draw(Eric, EricPos, Color.CornflowerBlue);
             SpriteBatch.End();
