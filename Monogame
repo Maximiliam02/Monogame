@@ -13,6 +13,8 @@ namespace Template
         SpriteBatch SpriteBatch;
         Texture2D Eric;
         Vector2 EricPos = new Vector2(100, 300);
+        Texture2D Skott;
+        List<Vector2> SkottPos = new List<Vector2>();
 
         public Game1()
         {
@@ -42,7 +44,8 @@ namespace Template
             // Create a new SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             Eric = Content.Load<Texture2D>("Eric");
-           
+            Skott = Content.Load<Texture2D>("Skott");
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -73,6 +76,17 @@ namespace Template
                 EricPos.Y++;
             if (kstate.IsKeyDown(Keys.Up))
                 EricPos.Y--;
+
+            if (kNewstate.IsKeyDown(Keys.Space) && kOldstate.IsKeyUp(Keys.Space))
+            {
+                SkottPos.Add(SkottPos);
+            }
+
+            for (int i = 0; i < SkottPos.Count; i++)
+            {
+                SkottPos[i] = SkottPos[i] - new Vector2(0, 1);
+            }
+
             base.Update(gameTime);
         }
 
@@ -86,10 +100,30 @@ namespace Template
             graphics.ApplyChanges();
             SpriteBatch.Begin();
             SpriteBatch.Draw(Eric, EricPos, Color.CornflowerBlue);
+
+            foreach (Vector2 SkottPos in SkottPos)
+            {
+                Rectangle rectangle = new Rectangle();
+                rectangle.Location = SkottPos.ToPoint();
+                rectangle.Size = new Point(20, 20);
+                spriteBatch.Draw(laser, rectangle, Color.White);
+            }
+
             SpriteBatch.End();
 
-            // TODO: Add your drawing code here
 
+            void RemoveObjects()
+            {
+                List<Vector2> temp = new List<Vector2>();
+                foreach (var item in SkottPos)
+                {
+                    if (item.Y >= 0)
+                    {
+                        temp.Add(item);
+                    }
+                }
+                SkottPos = temp;
+            }
 
         }
     }
@@ -97,6 +131,3 @@ namespace Template
 
 
 }
-
-
-
