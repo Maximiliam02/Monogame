@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Template
 {
@@ -15,7 +16,12 @@ namespace Template
         Vector2 EricPos = new Vector2(100, 300);
         Texture2D Skott;
         List<Vector2> SkottPos = new List<Vector2>();
+        Vector2 StartingPos;
+        
+        KeyboardState kNewstate;
+        KeyboardState kOldstate;
 
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -67,8 +73,9 @@ namespace Template
 
         protected override void Update(GameTime gameTime)
         {
+            KeyboardState kNewstate = Keyboard.GetState();
             KeyboardState kstate = Keyboard.GetState();
-            if (kstate.IsKeyDown(Keys.Right))
+                if (kstate.IsKeyDown(Keys.Right))
                 EricPos.X++;
             if (kstate.IsKeyDown(Keys.Left))
                 EricPos.X--;
@@ -77,15 +84,19 @@ namespace Template
             if (kstate.IsKeyDown(Keys.Up))
                 EricPos.Y--;
 
-            if (kNewstate.IsKeyDown(Keys.Space) && kOldstate.IsKeyUp(Keys.Space))
-            {
-                SkottPos.Add(SkottPos);
-            }
+            if (kNewstate.IsKeyDown(Keys.Space) && kOldstate.IsKeyUp(Keys.Space))           
+                SkottPos.Add(EricPos);
+
+          
+
+
 
             for (int i = 0; i < SkottPos.Count; i++)
             {
                 SkottPos[i] = SkottPos[i] - new Vector2(0, 1);
             }
+
+            kOldstate = kNewstate;
 
             base.Update(gameTime);
         }
@@ -101,12 +112,12 @@ namespace Template
             SpriteBatch.Begin();
             SpriteBatch.Draw(Eric, EricPos, Color.CornflowerBlue);
 
-            foreach (Vector2 SkottPos in SkottPos)
+            foreach (Vector2 skottPos in SkottPos)
             {
                 Rectangle rectangle = new Rectangle();
-                rectangle.Location = SkottPos.ToPoint();
+                rectangle.Location = skottPos.ToPoint();
                 rectangle.Size = new Point(20, 20);
-                spriteBatch.Draw(laser, rectangle, Color.White);
+                SpriteBatch.Draw(Skott, rectangle, Color.Red);
             }
 
             SpriteBatch.End();
